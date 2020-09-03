@@ -2,6 +2,10 @@ Recycloan
 ---
 
 
+`/recycloan`: client (web) folder
+`/recycloan-erc20`: contracts and migrations for Recycloan smart contract
+
+
 
 
 ### Useful links
