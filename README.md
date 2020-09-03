@@ -1,10 +1,10 @@
 Recycloan
 ---
 
-
+<pre>
 `/recycloan`: client (web) folder
 `/recycloan-erc20`: contracts and migrations for Recycloan smart contract
-
+</pre>
 
 
 
