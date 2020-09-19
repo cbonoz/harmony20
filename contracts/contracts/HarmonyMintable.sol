@@ -12,4 +12,3 @@ contract HarmonyERC20 is ERC20, ERC20Detailed, ERC20Mintable {
         _mint(msg.sender, _amount);
     }
 }
-
