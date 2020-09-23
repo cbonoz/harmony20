@@ -1,12 +1,39 @@
 body {
-  background: url("https://images.unsplash.com/photo-1562504208-03d85cc8c23e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80");
+  background: url("./../../assets/dark_bg.png");
   height: 100vh;
+  background-blend-mode: darken;
 }
 
 .home-title {
   text-align: center;
+  margin-top: 20px;
   font-size: 36px;
-  color: white;
+}
+
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+.home-section-logo {
+  margin-top: 20px;
+  width: 250px;
+}
+
+.clear {
+  clear: both;
+}
+
+.white {
+  color: white !important;
+}
+
+.home-section-header a {
+  color: lightgreen !important;
+  text-decoration: underline !important;
+}
+
+a:hover {
+  color: gray !important;
 }
 
 .home-container {
@@ -18,9 +45,9 @@ body {
 }
 
 .home-subtitle {
-  max-width: 600px;
-  color: white !important;
+  max-width: 1000px;
   margin: 0 auto;
   text-align: center;
-  padding: 40px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
