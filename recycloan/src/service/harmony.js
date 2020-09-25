@@ -1,23 +1,45 @@
-import { Harmony } from '@harmony-js/core';
-import { ChainID, ChainType } from '@harmony-js/utils';
+const { Harmony } = require("@harmony-js/core");
+const { ContractFactory } = require("@harmony-js/contract");
+const { Wallet } = require("@harmony-js/account");
+const { Messenger, HttpProvider } = require("@harmony-js/network");
+const { ChainID, ChainType, hexToNumber } = require("@harmony-js/utils");
 
-// const url = 'wss://ropsten.infura.io/ws/v3/4f3be7f5bbe644b7a8d95c151c8f52ec';
-// const url = 'https://ropsten.infura.io/v3/4f3be7f5bbe644b7a8d95c151c8f52ec';
-// const chainId = ChainID.Ropsten;
-// const chainType = ChainType.Ethereum;
+const contractJson = require("./MyContract.json");
 
-// access-control-allow-origin: *
-// content-length: 39
-// content-type: application/json
-// date: Wed, 24 Jul 2019 15:06:50 GMT
-// status: 200
-// vary: Origin
+// https://developer.aliyun.com/mirror/npm/package/@harmony-js/contract/v/0.1.35
 
-// const url = 'http://localhost:9500';
-// const url = 'ws://localhost:9800';
-// const chainId = ChainID.Default;
-// const chainType = ChainType.Harmony;
+const ENV = "prod";
 
-export const harmony = new Harmony();
-// export const harmony = new Harmony(url, { chainId, chainType });
-export { ChainID, ChainType };
+const chainId = ENV === "prod" ? ChainID.HmyMainnet : ChainID.HmyTestnet;
+const url =
+  ENV === "prod" ? "https://api.s0.t.hmny.io" : "https://api.s0.b.hmny.io";
+
+const hmy = new Harmony(url, {
+  chainType: ChainType.Harmony,
+  chainId,
+});
+
+export const mainWallet = new Wallet(
+  new Messenger(new HttpProvider(url), ChainType.Harmony, chainId)
+);
+
+const options1 = { gasPrice: "0x3B9ACA00" }; // gas price in hex corresponds to 1 Gwei or 1000000000
+const options2 = { gasPrice: 1000000000, gasLimit: 21000 }; // setting the default gas limit, but changing later based on estimate gas
+const options3 = { data: contractJson.bytecode }; // contractConstructor needs contract bytecode to deploy
+
+const contractAddr = "0x2dad62Ff19767662CF9634875a22a794F4E589d2";
+
+const factory = new ContractFactory(mainWallet);
+export const harmonyContract = factory.createContract(
+  contractJson.abi,
+  contractAddr
+);
+
+export const addWallet = (privateKey) => {
+  console.log("addWallet", privateKey);
+  mainWallet.addByPrivateKey(privateKey);
+};
+
+
+
+console.log("methods", harmonyContract.methods);
