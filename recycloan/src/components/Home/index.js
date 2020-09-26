@@ -133,14 +133,17 @@ export default function Home({ setBalances }) {
           {transactionHash && (
             <div className="result-section">
               <h1 class="title is-3">View your result:</h1>
-              <p>Transaction completed!</p>
-              <p>Initial loan sent to: {firstAddress}</p>
+              <h4>Transaction complete!</h4>
+              <p>
+                Initial loan sent to: <b>{firstAddress}</b>
+              </p>
               <a
                 target="_blank"
                 href={`https://explorer.harmony.one/#/tx/${transactionHash}`}
               >
                 Explorer Link
               </a>
+              <hr />
               <p>
                 Once repaid, funds will automatically be passed to the next
                 address, or returned if all addresses have been loaned to.
