@@ -11,7 +11,7 @@ contract Recycloan {
     }
 
     function lend(address payable[] memory initialBorrowers) public payable restricted {
-        require(msg.value > .01 ether);
+        require(msg.value > .0001 ether);
         borrowers = initialBorrowers;
         amount = msg.value;
         index = 0;
@@ -41,6 +41,10 @@ contract Recycloan {
 
     function getAmount() public view returns(uint) {
         return amount;
+    }
+
+    function getIndex() public view returns(uint) {
+        return index;
     }
     
     modifier restricted() {
