@@ -10,6 +10,26 @@ body {
   font-size: 36px;
 }
 
+.modal-key-input {
+  margin: 20px;
+  font-weight: bold;
+}
+
+.modal-header-logo {
+  width: 200px;
+  display: flex;
+  clear: both;
+  margin: 0 auto;
+}
+
+.address-input {
+  margin-bottom: 10px;
+}
+
+.address-inputs {
+  margin-bottom: 20px;
+}
+
 .centered {
   text-align: center;
   margin: 0 auto;

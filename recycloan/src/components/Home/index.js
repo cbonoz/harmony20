@@ -1,11 +1,12 @@
 import React, { Component, useState, useEffect } from "react";
 import ContractForm from "../ContractForm";
 import logo from "../../assets/recycloan_white.png";
+import logo_dark from "../../assets/recycloan.png";
 
 import "./Home.css";
 import { addWallet, harmonyContract, mainWallet } from "../../service/harmony";
 
-export default function Home() {
+export default function Home({ setBalances }) {
   const [result, setResult] = useState(null);
   const [privateKey, setPrivateKey] = useState("");
   const [showModal, setShowModal] = useState(true);
@@ -21,20 +22,46 @@ export default function Home() {
     setShowModal(true);
   };
 
+  const loadBalances = () => {
+    const balances = {};
+    mainWallet.accounts.forEach((addr) => {
+      const account = mainWallet.getAccount(addr);
+      console.log(account.bech32Address);
+      account.getBalance().then((response) => {
+        console.log(response);
+        balances[account.bech32Address] = response["balance"];
+        setBalances(balances);
+      });
+    });
+  };
+
   useEffect(() => {
     if (!showModal) {
-      addWallet(privateKey);
-      mainWallet.accounts.forEach((addr) => {
-        const account = mainWallet.getAccount(addr);
-        console.log(account.bech32Address);
-        account.getBalance().then((response) => {
-          console.log(response);
-        });
-      });
+      try {
+        addWallet(privateKey);
+      } catch (e) {
+        alert(`${privateKey} is not a valid private key`);
+        setShowModal(true);
+        return;
+      }
+
+      loadBalances();
     }
   }, [showModal]);
 
-  const modalClass = !privateKey || showModal ? "is-active" : "";
+  const modalClass = ""; // !privateKey || showModal ? "is-active" : "";
+
+  const headerMessage = () => (
+    <span>
+      Recycloan creates a smart contract that represents a series of loans that
+      go out automatically the moment they are paid back. Login with your{" "}
+      <a href="https://www.harmony.one/" target="_blank">
+        harmony
+      </a>{" "}
+      account to enter a list of addresses with an initial payment and we'll
+      automatically lend the funds in order to each address.
+    </span>
+  );
 
   const body = () => (
     <div className="home-section container">
@@ -45,16 +72,7 @@ export default function Home() {
           <p onClick={logout}>Change Wallet</p>
         </div>
         <div className="home-title">Loans without borders</div>
-        <p className="home-subtitle subtitle is-5 white">
-          Recycloan creates a smart contract that represents a series of loans
-          that go out automatically the moment they are paid back. Login with
-          your{" "}
-          <a href="https://www.harmony.one/" target="_blank">
-            harmony
-          </a>{" "}
-          account to enter a list of addresses with an initial payment and we'll
-          automatically lend the funds in order to each address.
-        </p>
+        <p className="home-subtitle subtitle is-5 white">{headerMessage()}</p>
       </div>
       <div class="columns container home-container">
         <div class="column">
@@ -74,15 +92,20 @@ export default function Home() {
             <button class="delete" aria-label="close"></button>
           </header>
           <section class="modal-card-body">
-            Enter the private key for the wallet you wish to loan from:
+            <img src={logo_dark} className="modal-header-logo centered" />
             <br />
-            <input
-              className="input"
-              type="text"
-              value={privateKey}
-              onChange={(e) => setPrivateKey(e.target.value)}
-              placeholder="Private Key"
-            />
+            {headerMessage()}
+            <div className="modal-key-input">
+              <p>Enter the private key for the wallet you wish to loan from:</p>
+              <br />
+              <input
+                className="input"
+                type="text"
+                value={privateKey}
+                onChange={(e) => setPrivateKey(e.target.value)}
+                placeholder="Private Key"
+              />
+            </div>
           </section>
           <footer class="modal-card-foot">
             <button
