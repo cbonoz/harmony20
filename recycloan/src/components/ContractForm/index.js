@@ -15,7 +15,7 @@ const ContractForm = ({ onSubmit, isLoading }) => {
     setAddresses([...addresses]);
   };
 
-  const loadingClasses = isLoading ? `isLoading` : ``
+  const loadingClasses = isLoading ? `isLoading` : ``;
 
   return (
     <div>
@@ -60,11 +60,12 @@ const ContractForm = ({ onSubmit, isLoading }) => {
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Amount of Harmony (ONE) to lend"
         />
-        <Button
+        <button
           className={`${loadingClasses} button is-primary`}
-          onClick={() => onSubmit(addresses, amount)}>
-            Start Loan
-          </Button>
+          onClick={() => onSubmit(addresses, amount)}
+        >
+          Start Loan
+        </button>
       </div>
       <div className="field is-grouped is-grouped-right">
         <p className="control">

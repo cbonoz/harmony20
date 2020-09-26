@@ -5,15 +5,16 @@ import logo_dark from "../../assets/recycloan.png";
 
 import "./Home.css";
 import { addWallet, harmonyContract, mainWallet } from "../../service/harmony";
+import { hexToNumber } from "@harmony-js/utils";
 
 export default function Home({ setBalances }) {
   const [result, setResult] = useState(null);
   const [privateKey, setPrivateKey] = useState("");
-  const [loading ,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(true);
 
   const onSubmit = (addresses, amount) => {
-    setLoading(true)
+    setLoading(true);
     console.log("submit", addresses, amount);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
@@ -32,12 +33,13 @@ export default function Home({ setBalances }) {
           .startLoan()
           .call(options2)
           .then((res) => {
-            console.log('result', res)
+            console.log("result", res);
             setResult(res);
-            setLoading(false)
-          }).catch(e => {
             setLoading(false);
-            alert('error calling contract', e)
+          })
+          .catch((e) => {
+            setLoading(false);
+            alert("error calling contract", e);
           });
       });
   };
