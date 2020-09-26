@@ -14,8 +14,12 @@ export default function Home({ setBalances }) {
   const [showModal, setShowModal] = useState(true);
 
   const onSubmit = (addresses, amount) => {
-    setLoading(true);
     console.log("submit", addresses, amount);
+    if (!addresses || !amount) {
+      alert("At least one address and amount required");
+      return;
+    }
+    setLoading(true);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
 
@@ -96,6 +100,12 @@ export default function Home({ setBalances }) {
     </span>
   );
 
+  const transactionHash =
+    result &&
+    result.transaction &&
+    result.transaction.receipt &&
+    result.transaction.receipt.transactionHash;
+
   const body = () => (
     <div className="home-section container">
       <div className="home-section-header white">
@@ -109,21 +119,30 @@ export default function Home({ setBalances }) {
       </div>
       <div class="columns container home-container">
         <div class="column">
-          <h1 class="title is-2">Who do you want to loan to?</h1>
+          <h1 class="title is-3">Who do you want to loan to?</h1>
           <ContractForm onSubmit={onSubmit} isLoading={loading} />
         </div>
         <div class="column">
-          {loading && <p><i>Waiting for response...</i></p>}
-          {result && (
+          {loading && (
+            <p>
+              <i>Waiting for response...</i>
+            </p>
+          )}
+          {transactionHash && (
             <div className="result-section">
-              <h1 class="title is-2">View your result:</h1>
-              {Object.keys(result.transaction).map((k, i) => {
-                return (
-                  <li>
-                    {k}: {JSON.stringify(result.transaction[k])}
-                  </li>
-                );
-              })}
+              <h1 class="title is-3">View your result:</h1>
+              <p>Transaction completed!</p>
+              <p>Initial loan sent to: {addresses[0]}</p>
+              <a
+                target="_blank"
+                href={`https://explorer.harmony.one/#/tx/${transactionHash}`}
+              >
+                Explorer Link
+              </a>
+              <p>
+                Once repaid, funds will automatically be passed to the next
+                address, or returned if all addresses have been loaned to.
+              </p>
             </div>
           )}
         </div>
