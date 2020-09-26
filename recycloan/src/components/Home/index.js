@@ -29,8 +29,8 @@ export default function Home({ setBalances }) {
       .estimateGas(options1)
       .then((gas) => {
         const estimatedGas = hexToNumber(gas);
-        console.log("estimated gas", estimatedGas);
         options2 = { ...options2, gasLimit: estimatedGas };
+        console.log("calling lend", options2);
         harmonyContract.methods
           .lend(addresses)
           .call(options2)
