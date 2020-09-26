@@ -21,16 +21,18 @@ export default function Home({ setBalances }) {
 
     const options1 = { gasPrice: "0x3B9ACA00" }; // gas price in hex corresponds to 1 Gwei or 1000000000
     // setting the default gas limit, but changing later based on estimate gas
-    let options2 = { gasPrice: 1000000000, gasLimit: 21000 };
+    let options2 = { gasPrice: 1000000000, gasLimit: 21000, value: amount };
 
     // Initiate the loan.
     harmonyContract.methods
-      .startLoan()
+      .lend(addresses)
       .estimateGas(options1)
       .then((gas) => {
-        options2 = { ...options2, gasLimit: hexToNumber(gas) };
+        const estimatedGas = hexToNumber(gas);
+        console.log("estimated gas", estimatedGas);
+        options2 = { ...options2, gasLimit: estimatedGas };
         harmonyContract.methods
-          .startLoan()
+          .lend(addresses)
           .call(options2)
           .then((res) => {
             console.log("result", res);
@@ -39,8 +41,12 @@ export default function Home({ setBalances }) {
           })
           .catch((e) => {
             setLoading(false);
+            console.error("err calling contract", e);
             alert("error calling contract", e);
           });
+      })
+      .catch((e) => {
+        console.error("err estimating gas", e);
       });
   };
 
@@ -107,7 +113,12 @@ export default function Home({ setBalances }) {
           <ContractForm onSubmit={onSubmit} isLoading={loading} />
         </div>
         <div class="column">
-          {result && <h1 class="title is-2">View your result:</h1>}
+          {result && (
+            <div>
+              <h1 class="title is-2">View your result:</h1>
+              <div>{JSON.stringify(result)}</div>
+            </div>
+          )}
         </div>
       </div>
 

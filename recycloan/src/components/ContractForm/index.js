@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 
+const INITIAL_STATE = [
+  "one1ewd8g24pq6yd5zkj6dm56qfh5ux983y3eqzgkc",
+  "one1z6ulhzglx7hrjuguyaqdpujppvycu8lsgqne6e",
+];
+
 const ContractForm = ({ onSubmit, isLoading }) => {
-  const [addresses, setAddresses] = useState([""]);
+  const [addresses, setAddresses] = useState([...INITIAL_STATE]);
   const [amount, setAmount] = useState(null);
 
   const clear = (e) => {
     e.preventDefault();
-    setAddresses([""]);
+    setAddresses([...INITIAL_STATE]);
     setAmount(null);
   };
 
