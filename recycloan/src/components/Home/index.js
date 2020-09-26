@@ -12,6 +12,7 @@ export default function Home({ setBalances }) {
   const [privateKey, setPrivateKey] = useState("");
   const [loading, setLoading] = useState(false);
   const [showModal, setShowModal] = useState(true);
+  const [firstAddress, setFirstAddress] = useState("");
 
   const onSubmit = (addresses, amount) => {
     console.log("submit", addresses, amount);
@@ -40,6 +41,7 @@ export default function Home({ setBalances }) {
           .send(options2)
           .then((res) => {
             console.log("result", res);
+            setFirstAddress(addresses[0]);
             setResult(res);
             setLoading(false);
           })
@@ -132,7 +134,7 @@ export default function Home({ setBalances }) {
             <div className="result-section">
               <h1 class="title is-3">View your result:</h1>
               <p>Transaction completed!</p>
-              <p>Initial loan sent to: {addresses[0]}</p>
+              <p>Initial loan sent to: {firstAddress}</p>
               <a
                 target="_blank"
                 href={`https://explorer.harmony.one/#/tx/${transactionHash}`}
