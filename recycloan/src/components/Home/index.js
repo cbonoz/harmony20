@@ -9,9 +9,11 @@ import { addWallet, harmonyContract, mainWallet } from "../../service/harmony";
 export default function Home({ setBalances }) {
   const [result, setResult] = useState(null);
   const [privateKey, setPrivateKey] = useState("");
+  const [loading ,setLoading] = useState(false)
   const [showModal, setShowModal] = useState(true);
 
   const onSubmit = (addresses, amount) => {
+    setLoading(true)
     console.log("submit", addresses, amount);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
@@ -32,6 +34,10 @@ export default function Home({ setBalances }) {
           .then((res) => {
             console.log('result', res)
             setResult(res);
+            setLoading(false)
+          }).catch(e => {
+            setLoading(false);
+            alert('error calling contract', e)
           });
       });
   };
@@ -96,7 +102,7 @@ export default function Home({ setBalances }) {
       <div class="columns container home-container">
         <div class="column">
           <h1 class="title is-2">Who do you want to loan to?</h1>
-          <ContractForm onSubmit={onSubmit} />
+          <ContractForm onSubmit={onSubmit} isLoading={loading} />
         </div>
         <div class="column">
           {result && <h1 class="title is-2">View your result:</h1>}

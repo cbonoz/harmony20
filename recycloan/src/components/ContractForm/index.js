@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ContractForm = ({ onSubmit }) => {
+const ContractForm = ({ onSubmit, isLoading }) => {
   const [addresses, setAddresses] = useState([""]);
   const [amount, setAmount] = useState(null);
 
@@ -14,6 +14,8 @@ const ContractForm = ({ onSubmit }) => {
     addresses.push("");
     setAddresses([...addresses]);
   };
+
+  const loadingClasses = isLoading ? `isLoading` : ``
 
   return (
     <div>
@@ -58,11 +60,11 @@ const ContractForm = ({ onSubmit }) => {
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Amount of Harmony (ONE) to lend"
         />
-        <input
-          className="button is-primary"
-          onClick={() => onSubmit(addresses, amount)}
-          value="Start Loan"
-        />
+        <Button
+          className={`${loadingClasses} button is-primary`}
+          onClick={() => onSubmit(addresses, amount)}>
+            Start Loan
+          </Button>
       </div>
       <div className="field is-grouped is-grouped-right">
         <p className="control">
