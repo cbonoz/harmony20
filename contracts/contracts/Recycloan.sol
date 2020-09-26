@@ -8,11 +8,7 @@ contract Recycloan {
     constructor() public {
         manager = msg.sender;
     }
-    
-    function addBorrower() public payable {
-        borrowers.push(msg.sender);
-    }
-    
+   
     function getBorrowers() public view returns(address payable[] memory) {
         return borrowers;
     }
