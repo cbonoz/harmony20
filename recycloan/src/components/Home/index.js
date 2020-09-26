@@ -15,6 +15,25 @@ export default function Home({ setBalances }) {
     console.log("submit", addresses, amount);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
+
+    const options1 = { gasPrice: "0x3B9ACA00" }; // gas price in hex corresponds to 1 Gwei or 1000000000
+    // setting the default gas limit, but changing later based on estimate gas
+    let options2 = { gasPrice: 1000000000, gasLimit: 21000 };
+
+    // Initiate the loan.
+    harmonyContract.methods
+      .startLoan()
+      .estimateGas(options1)
+      .then((gas) => {
+        options2 = { ...options2, gasLimit: hexToNumber(gas) };
+        harmonyContract.methods
+          .startLoan()
+          .call(options2)
+          .then((res) => {
+            console.log('result', res)
+            setResult(res);
+          });
+      });
   };
 
   const logout = () => {
@@ -49,7 +68,7 @@ export default function Home({ setBalances }) {
     }
   }, [showModal]);
 
-  const modalClass = ""; // !privateKey || showModal ? "is-active" : "";
+  const modalClass = !privateKey || showModal ? "is-active" : "";
 
   const headerMessage = () => (
     <span>
