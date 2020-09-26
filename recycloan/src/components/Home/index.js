@@ -21,19 +21,19 @@ export default function Home({ setBalances }) {
 
     const options1 = { gasPrice: "0x3B9ACA00" }; // gas price in hex corresponds to 1 Gwei or 1000000000
     // setting the default gas limit, but changing later based on estimate gas
-    let options2 = { gasPrice: 1000000000, gasLimit: 21000, value: amount };
+    let options2 = { gasPrice: 1000000000, gasLimit: 21000 };
 
     // Initiate the loan.
     harmonyContract.methods
       .lend(addresses)
       .estimateGas(options1)
       .then((gas) => {
-        const estimatedGas = hexToNumber(gas);
+        const estimatedGas = parseInt(hexToNumber(gas));
         options2 = { ...options2, gasLimit: estimatedGas };
-        console.log("calling lend", options2);
+        console.log("calling lend", options2, addresses);
         harmonyContract.methods
           .lend(addresses)
-          .call(options2)
+          .send(options2)
           .then((res) => {
             console.log("result", res);
             setResult(res);
