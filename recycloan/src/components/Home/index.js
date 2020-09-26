@@ -42,7 +42,7 @@ export default function Home({ setBalances }) {
           .catch((e) => {
             setLoading(false);
             console.error("err calling contract", e);
-            alert("error calling contract", e);
+            alert(`error calling contract ${e.toString}`);
           });
       })
       .catch((e) => {
