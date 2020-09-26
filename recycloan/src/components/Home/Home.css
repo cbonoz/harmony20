@@ -1,5 +1,6 @@
 body {
   background: url("./../../assets/dark_bg.png");
+  background-repeat: repeat-y;
   height: 100vh;
   background-blend-mode: darken;
 }
@@ -13,6 +14,11 @@ body {
 .modal-key-input {
   margin: 20px;
   font-weight: bold;
+}
+
+.result-section {
+  max-width: 600px;
+  overflow-y: scroll;
 }
 
 .modal-header-logo {

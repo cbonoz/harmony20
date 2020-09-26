@@ -113,10 +113,17 @@ export default function Home({ setBalances }) {
           <ContractForm onSubmit={onSubmit} isLoading={loading} />
         </div>
         <div class="column">
+          {loading && <p><i>Waiting for response...</i></p>}
           {result && (
-            <div>
+            <div className="result-section">
               <h1 class="title is-2">View your result:</h1>
-              <div>{JSON.stringify(result)}</div>
+              {Object.keys(result.transaction).map((k, i) => {
+                return (
+                  <li>
+                    {k}: {JSON.stringify(result.transaction[k])}
+                  </li>
+                );
+              })}
             </div>
           )}
         </div>
