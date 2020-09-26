@@ -1,37 +1,50 @@
 pragma solidity >=0.4.21 <0.6.0;
 
 contract Recycloan {
-    address public manager;
+    address payable public lender;
     address payable[] public borrowers;
     uint public amount;
+    uint public index;
     
     constructor() public {
-        manager = msg.sender;
+        lender = msg.sender;
+    }
+
+    function lend(address payable[] memory initialBorrowers) public payable restricted {
+        require(msg.value > .01 ether);
+        borrowers = initialBorrowers;
+        amount = msg.value;
+        index = 0;
+        if (borrowers.length > index) {
+            borrowers[index].transfer(address(this).balance);
+        }
+    }
+
+    function repay() public {
+        if (address(this).balance > amount) {
+            if (index <= borrowers.length - 1) {
+                index++;
+                borrowers[index].transfer(address(this).balance);
+            } else {
+                lender.transfer(address(this).balance);
+            }
+        }
+    }
+
+    function addBorrower(address payable borrower) public restricted {
+        borrowers.push(borrower);
     }
    
     function getBorrowers() public view returns(address payable[] memory) {
         return borrowers;
     }
 
-    /**
-     * @dev The player enters into the current lottery session by
-     *      paying at least 0.1 token.
-     */
-    function startLoan(address[] _borrowers, uint _amount) {
-        require(msg.value > .1 ether, INSUFFICIENT_FUND_MESSAGE);
-        borrowers = _borrowers;
-        amount = _amount;
-    }
-    
-    function lendToNextBorrower() public restricted {
-        uint index = 0;
-        borrowers[index].transfer(address(this).balance);
-        borrowers = new address payable[](0);
+    function getAmount() public view returns(uint) {
+        return amount;
     }
     
     modifier restricted() {
-        require(msg.sender == manager);
+        require(msg.sender == lender);
         _;
     }
-    
-} 
+}
