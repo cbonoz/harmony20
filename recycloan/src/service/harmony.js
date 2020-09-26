@@ -6,7 +6,7 @@ const { ChainID, ChainType, hexToNumber } = require("@harmony-js/utils");
 
 // Update these
 const contractJson = require("./MyContract.json");
-const CONTRACT_ADDR = "0x697B8d020A77E050ADd2fFc17DB21363Eba589b5"
+const CONTRACT_ADDR = "0xf12e5348250772A3A7b05DBF7827a0323f296ab9"
 const ENV = "prod";
 
 // https://developer.aliyun.com/mirror/npm/package/@harmony-js/contract/v/0.1.35
