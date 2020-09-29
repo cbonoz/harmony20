@@ -2,9 +2,9 @@
 	<img src="./img/recycloan.png"/>
 </p>
 
-Recycloan
----
+### Recycloan
 
+Microlending for disadvantaged entrepreneurs without access to credit.
 
 ## Inspiration
 
