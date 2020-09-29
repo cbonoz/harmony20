@@ -54,6 +54,7 @@ const ContractForm = ({ onSubmit, isLoading }) => {
         <br />
         {/* {JSON.stringify(addresses)} */}
       </div>
+      <label>Enter amount (ONE)</label>
       <div className="field has-addons has-addons-centered">
         <p className="control">
           <img src="https://assets.coingecko.com/coins/images/4344/small/Y88JAze.png?1565065793" />
