@@ -18,9 +18,12 @@ Anyone can query a list of borrower addresses as well as the number that have re
 
 ## How we built it
 
-Recycload comprises a smart contract on the Harmony mainnet and a web application. The web application is built using React.js and the smart contract is built using Solidity. A loan can be initiated on the Recycload smart contract using the lend function, which establishes a list of borrowers and funds the balance of the contract. The balance is immediately transferred to the first borrower. The repay function allows a borrower to repay the funds they were lent, and once the balance reaches the full amount lent, it is transferred to the next borrower.
+Recycloan comprises a smart contract on the Harmony mainnet and a web application. The web application is built using React.js and the smart contract is built using Solidity. A loan can be initiated on the Recycloan smart contract using the lend function, which establishes a list of borrowers and funds the balance of the contract. The balance is immediately transferred to the first borrower. The repay function allows a borrower to repay the funds they were lent, and once the balance reaches the full amount lent, it is transferred to the next borrower.
+
+We used the harmony-core and associated harmony javascript sdk's to facilitate the contract interaction from the Recycloan web UI.
 
 ## Structure
+
 <pre>
 `application`: Client (website) for logging into a harmony wallet and sending a transaction (uses preset mainnet contract address set in `harmony.js`). This project allows lending via the `lend` method of the `Recycloan` smart contract. Interacts using the harmony sdk.
 `contract`: Truffle migrations and Recycloan harmony smart contract.
@@ -32,10 +35,10 @@ We were successfully able to deploy a smart contract on the Harmony mainnet and 
 
 **Recycloan deployed smart contract address**
 
-mainnet0:  0xF498DaBf26fC52F727F996C4116e444bC6778452
+mainnet0: 0xF498DaBf26fC52F727F996C4116e444bC6778452
 
-testnet:      0xf12e5348250772A3A7b05DBF7827a0323f296ab9
+testnet: 0xf12e5348250772A3A7b05DBF7827a0323f296ab9
 
 ## What's next for Recycloan
 
-Next we plan to build a web application for borrowers to interact with our smart contracts to access their transaction records for the purpose of establishing credit history based off a wallet address. The smart contract already includes a means of accessing this information so we simply need to create a UI for querying the records. 
+Next we plan to build a web application for borrowers to interact with our smart contracts to access their transaction records for the purpose of establishing credit history based off a wallet address. The smart contract already includes a means of accessing this information so we simply need to create a UI for querying the records.
