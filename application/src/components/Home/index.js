@@ -14,12 +14,13 @@ export default function Home({ setBalances }) {
   const [showModal, setShowModal] = useState(true);
   const [firstAddress, setFirstAddress] = useState("");
 
-  const onSubmit = (addresses, amount) => {
-    console.log("submit", addresses, amount);
-    if (!addresses || !amount) {
+  const onSubmit = (rawAddresses, amount) => {
+    console.log("submit", rawAddresses, amount);
+    if (!rawAddresses || !amount) {
       alert("At least one address and amount required");
       return;
     }
+    const addresses = rawAddresses.filter((x) => x);
     setLoading(true);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
