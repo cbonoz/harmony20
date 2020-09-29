@@ -20,7 +20,7 @@ export default function Home({ setBalances }) {
       alert("At least one address and amount required");
       return;
     }
-    const addresses = rawAddresses.filter((x) => x);
+    const addresses = rawAddresses.filter((x) => !!x);
     setLoading(true);
     console.log("methods", harmonyContract.methods);
     // TODO: invoke contract and set result.
