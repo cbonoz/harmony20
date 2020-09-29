@@ -1,8 +1,6 @@
 body {
   background: url("./../../assets/dark_bg.png");
-  background-repeat: repeat-y;
   height: 100vh;
-  background-blend-mode: darken;
 }
 
 .home-title {

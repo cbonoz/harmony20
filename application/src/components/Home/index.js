@@ -88,7 +88,8 @@ export default function Home({ setBalances }) {
     }
   }, [showModal]);
 
-  const modalClass = !privateKey || showModal ? "is-active" : "";
+  const modalClass = "";
+  // !privateKey || showModal ? "is-active" : "";
 
   const headerMessage = () => (
     <span>
